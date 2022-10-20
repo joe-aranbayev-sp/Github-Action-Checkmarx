@@ -26,7 +26,7 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on - Ubuntu is required as Docker is leveraged for the action
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
