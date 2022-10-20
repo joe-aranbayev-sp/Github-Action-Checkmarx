@@ -1,0 +1,22 @@
+name: self-hosted-test
+
+on:
+  push:
+    branches: all
+  pull_request:
+    branches: all
+    
+  workflow_dispatch:
+  
+  
+jobs:
+  build:
+    runs-on: self-hosted
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Run some script
+        run: echo Hello, world!
+        
+        
