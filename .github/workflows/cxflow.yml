@@ -49,6 +49,11 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Checkmarx CxFlow Action
-      run: java -jar $env:cxflow
+      run: java -jar $env:cxflow --scan  --spring.config.location=$env:cxflowyml --f=. --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --merge-id=${{ github.event.number }} --cx-project=${{ github.event.repository.name }}
       #working-directory: ${{ env.WORKDIR }}
+      
+    - name: Upload SARIF file
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: cx.sarif
      
