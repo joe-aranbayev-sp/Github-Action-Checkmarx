@@ -11,7 +11,7 @@
 #
 # For full documentation,including a list of all inputs, please refer to the README https://github.com/checkmarx-ts/checkmarx-cxflow-github-action
 
-name: CxFlow-GitHub-Pull-Request
+name: CxFlow-self-hosted-pull-scan
 
 # Controls when the action will run. Triggers the workflow on push or pull request events but only for the master branch
 on:
@@ -28,11 +28,17 @@ jobs:
   build:
     # The type of runner that the job will run on - Ubuntu is required as Docker is leveraged for the action
     runs-on: self-hosted
+    
+    env: 
+      WORKDIR: cxflow
+    
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
+    
     - name: Checkmarx CxFlow Action
-      uses: checkmarx-ts/checkmarx-cxflow-github-action@v2
+      run: java -jar cx-flow-1.6.35-java11.jar 
+      working-directory: ${{ env.WORKDIR }}
       with:
         project: ${{ github.repository }}-PR
         team: ${{ secrets.CHECKMARX_TEAMS }}
