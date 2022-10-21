@@ -49,6 +49,6 @@ jobs:
     - uses: actions/checkout@v2
     
     - name: Checkmarx CxFlow Action
-      run: java -jar %cxflow% 
+      run: echo "java -jar %cxflow%"
       #working-directory: ${{ env.WORKDIR }}
      
