@@ -29,21 +29,6 @@ jobs:
     # The type of runner that the job will run on - Ubuntu is required as Docker is leveraged for the action
     runs-on: self-hosted
     
-    env: 
-      WORKDIR: cxflow
-      project: ${{ github.repository }}-PR
-      team: ${{ secrets.CHECKMARX_TEAMS }}
-      checkmarx_url: ${{ secrets.CHECKMARX_URL }}   # To be stored in GitHub Secrets.
-      checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}  # To be stored in GitHub Secrets.
-      checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}  # To be stored in GitHub Secrets.
-      checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}  # To be stored in GitHub Secrets.
-      incremental: true
-      break_build: false
-      scanners: sast
-      bug_tracker: GITHUBPULL
-      params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --merge-id=${{ github.event.number }} --cx-flow.filterSeverity --cx-flow.filterCategory
-
-    
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v2
