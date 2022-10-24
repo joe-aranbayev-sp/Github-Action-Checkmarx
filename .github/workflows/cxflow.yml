@@ -31,7 +31,7 @@ jobs:
     
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     
     - name: Checkmarx CxFlow Action
       run: java -jar $env:cxflow --scan  --spring.config.location=$env:cxflowyml --f=. --incremental=true --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.head_ref }} --merge-id=${{ github.event.number }} --cx-project=${{ github.event.repository.name }}
