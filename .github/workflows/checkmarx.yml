@@ -5,7 +5,7 @@
 
 # This is a basic workflow to help you get started with Using Checkmarx CxFlow Action
 
-name: CxFlow
+name: CxFlow Pull Request AWS
 
 on:
   pull_request:
