@@ -1,4 +1,4 @@
-name: do-the-job
+name: AWS auto
 on: pull_request
 jobs:
   start-runner:
@@ -20,16 +20,16 @@ jobs:
         with:
           mode: start
           github-token: ${{ secrets.GH_PERSONAL_ACCESS_TOKEN }}
-          ec2-image-id: ami-123
-          ec2-instance-type: t3.nano
-          subnet-id: subnet-123
-          security-group-id: sg-123
-          iam-role-name: my-role-name # optional, requires additional permissions
-          aws-resource-tags: > # optional, requires additional permissions
-            [
-              {"Key": "Name", "Value": "ec2-github-runner"},
-              {"Key": "GitHubRepository", "Value": "${{ github.repository }}"}
-            ]
+          ec2-image-id: i-075f7eb7b0bdb197e
+          ec2-instance-type: t2.micro
+          subnet-id: subnet-0d2cb97c34c6621ce
+          security-group-id: sg-08a30a0c9e30a4f97
+          #iam-role-name: my-role-name # optional, requires additional permissions
+          #aws-resource-tags: > # optional, requires additional permissions
+          #  [
+          #    {"Key": "Name", "Value": "ec2-github-runner"},
+          #    {"Key": "GitHubRepository", "Value": "${{ github.repository }}"}
+          #  ]
   do-the-job:
     name: Do the job on the runner
     needs: start-runner # required to start the main job when the runner is ready
