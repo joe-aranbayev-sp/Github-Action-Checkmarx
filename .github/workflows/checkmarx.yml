@@ -40,11 +40,19 @@ jobs:
       uses: checkmarx-ts/checkmarx-cxflow-github-action@49d8269b14ca87910ba003d47a31fa0c7a11f2fe
       with:
         project: SAILPOINT-${{ github.event.repository.name }}
-        team: ${{ secrets.CHECKMARX_TEAMS }}
+        team: /CxServer/OSS
+        # sast secrets
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
         checkmarx_password: ${{ secrets.CHECKMARX_PASSWORD }}
         checkmarx_client_secret: ${{ secrets.CHECKMARX_CLIENT_SECRET }}
+        # sca secrets
+        sca_api_url: https://api-sca.checkmarx.net
+        sca_app_url: https://sca.checkmarx.net
+        sca_access_control_url: https://platform.checkmarx.net
+        sca_username: ${{ secrets.SCA_USERNAME }}
+        sca_password: ${{ secrets.SCA_PASSWORD }}
+        
         scanners: sast, sca
         params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filter-severity=high --cx-flow.filter-category --checkmarx.disable-clubbing=true --repo-url=${{ github.event.repository.url }} 
     # Upload the Report for CodeQL/Security Alerts
