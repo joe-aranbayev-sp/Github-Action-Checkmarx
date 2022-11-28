@@ -52,7 +52,7 @@ jobs:
         sca_access_control_url: https://platform.checkmarx.net
         sca_username: ${{ secrets.SCA_USERNAME }}
         sca_password: ${{ secrets.SCA_PASSWORD }}
-        
+        sca_tenant: sailpoint
         scanners: sast, sca
         params: --namespace=${{ github.repository_owner }} --repo-name=${{ github.event.repository.name }} --branch=${{ github.ref }} --cx-flow.filter-severity=high --cx-flow.filter-category --checkmarx.disable-clubbing=true --repo-url=${{ github.event.repository.url }} 
     # Upload the Report for CodeQL/Security Alerts
