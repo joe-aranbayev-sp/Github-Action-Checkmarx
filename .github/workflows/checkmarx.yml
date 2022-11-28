@@ -40,7 +40,7 @@ jobs:
       uses: checkmarx-ts/checkmarx-cxflow-github-action@49d8269b14ca87910ba003d47a31fa0c7a11f2fe
       with:
         project: SAILPOINT-${{ github.event.repository.name }}
-        team: /CxServer/OSS
+        team: /CxServer/SAILPOINT
         # sast secrets
         checkmarx_url: ${{ secrets.CHECKMARX_URL }}
         checkmarx_username: ${{ secrets.CHECKMARX_USERNAME }}
