@@ -1,5 +1,23 @@
-name: Auto Start AWS CxFlow on Pull
-on: [pull_request, workflow_dispatch]
+# This workflow executes Checkmarx scans (SAST & SCA) on pull requests. It runs in a self-hosted actions runner
+# hosted in AWS. The flow has 3 parts: 1) start the ec2 runner instance 2) carry out the scans via CxFlow and 
+# 3) stop the ec2 runner instance. It uses the following GitHub secrets:
+#           AWS_EC2_INSTANCE_ID
+#           AWS_ACCESS_KEY_ID
+#           AWS_SECRET_ACCESS_KEY
+#           AWS_REGION
+#           CHECKMARX_URL
+#           CHECKMARX_USERNAME
+#           CHECKMARX_PASSWORD
+#           CHECKMARX_URL
+#           CHECKMARX_CLIENT_SECRET
+#           SCA_USERNAME
+#           SCA_PASSWORD
+#
+# To change the severity threshold, modify the --cx-flow.filter-severity parameter in the CxFlow job below
+
+
+name: CheckMarx Scan on Pull Request
+on: pull_request
   
 jobs:
   start-runner:
@@ -7,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Start AWS EC2
-        # Run AWS Command on the GitHub Hosted runner which starts the instance using AWS authentication stored in GitHub Secrets (see below how to add)
+        # Run AWS Command on the GitHub Hosted runner which starts the instance
         run: |
           aws ec2 start-instances --instance-ids ${{secrets.AWS_EC2_INSTANCE_ID }}
         env:
@@ -25,8 +43,7 @@ jobs:
       security-events: write # for github/codeql-action/upload-sarif to upload SARIF results
       actions: read # only required for a private repository by github/codeql-action/upload-sarif to get the Action run status
     needs: start-runner # required to start the main job when the runner is ready
-    runs-on: [self-hosted, aws]
-
+    runs-on: [self-hosted, AWS, AppSec]
     # Steps require - checkout code, run CxFlow Action, Upload SARIF report (optional)
     steps:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
@@ -56,7 +73,8 @@ jobs:
       uses: github/codeql-action/upload-sarif@v2
       with:
         sarif_file: cx.sarif
-        
+      #post-job task is a script referenced in .env file (cleans up the _work directory)
+      
   stop-runner:
     name: Stop self-hosted EC2 runner
     needs:
@@ -72,4 +90,4 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}     
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_REGION }}   
