@@ -165,7 +165,7 @@ import  javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class SQLInjectionSampleServlet.
  */
-
+//new comment
 public class SQLInjectionSampleServlet extends HttpServlet
 {
 
