@@ -1,2 +1,2 @@
 # Github-Action-Checkmarx
-Test repo contains slqi code
+Test repo contains slqi code for testing purposes
