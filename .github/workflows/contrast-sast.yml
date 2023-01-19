@@ -24,7 +24,7 @@ on:
 permissions:
   contents: read
 
-name: Contrast Scan
+name: Contrast SAST
 jobs:
   build-and-scan:
     permissions:
@@ -39,10 +39,12 @@ jobs:
     # -name: Build Project
     # ...
     # Scan Artifact
-    - name: Contrast Scan Action
+    - name: Zip artifact for deployment
+      run: zip release.zip ./* -r
+    - name: Contrast SAST Scan Action
       uses: Contrast-Security-OSS/contrastscan-action@7352a45d9678ec8a434cf061b07ffb51c1e351a1
       with:
-        artifact: mypath/target/myartifact.jar # replace this path with the path to your built artifact
+        artifact: release.zip # replace this path with the path to your built artifact
         apiKey: ${{ secrets.CONTRAST_API_KEY }}
         orgId: ${{ secrets.CONTRAST_ORGANIZATION_ID }}
         authHeader: ${{ secrets.CONTRAST_AUTH_HEADER }}
