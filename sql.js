@@ -1,4 +1,5 @@
 //vulnerable sqli
+//no comment
 
 var mysql = require('db-mysql');
 var http = require('http');
